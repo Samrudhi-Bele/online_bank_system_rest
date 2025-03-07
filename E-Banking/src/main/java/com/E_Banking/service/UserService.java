@@ -1,9 +1,12 @@
 package com.E_Banking.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.E_Banking.dao.AdminDao;
 import com.E_Banking.dao.UserDao;
@@ -32,22 +35,32 @@ public class UserService {
 
         return "User not found!";
     }
-	public String registerCustomer(Users customer) {
-        if (dao.getUser(customer.getUsername()) != null) {
-            return "Customer already exists!";
-        }
-        dao.saveUsers(customer);
-        return "Customer registered successfully!";
-    }
+	public Map<String, String> registerCustomer(@RequestBody Users customer) {
+	    Map<String, String> response = new HashMap<>();
+
+	    if (dao.getUser(customer.getUsername()) != null) {
+	        response.put("message", "Customer already exists!");
+	    } else {
+	        dao.saveUsers(customer);
+	        response.put("message", "Customer registered successfully!");
+	    }
+
+	    return response; // Spring Boot automatically converts this to JSON
+	}
 
     // Register a new Admin
-    public String registerAdmin(Admin admin) {
-        if (adao.getAdmin(admin.getUsername()) != null) {
-            return "Admin already exists!";
-        }
-        adao.saveAdmin(admin);
-        return "Admin registered successfully!";
-    }
+	public Map<String, String> registerAdmin(@RequestBody Admin admin) {
+	    Map<String, String> response = new HashMap<>();
+	    
+	    if (adao.getAdmin(admin.getUsername()) != null) {
+	        response.put("message", "Admin already exists!");
+	    } else {
+	        adao.saveAdmin(admin);
+	        response.put("message", "Admin registered successfully!");
+	    }
+	    
+	    return response; // Returns JSON automatically
+	}
 	
 //	public void saveUsers(Users user){
 //	    dao.saveUsers( user);

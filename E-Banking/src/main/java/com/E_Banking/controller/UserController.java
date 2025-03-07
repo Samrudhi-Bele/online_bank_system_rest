@@ -1,6 +1,7 @@
 package com.E_Banking.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,13 +34,13 @@ public class UserController {
 
     // Register a new customer
     @PostMapping("/register/customer")
-    public String registerCustomer(@RequestBody Users customer) {
+    public Map<String, String> registerCustomer(@RequestBody Users customer) {
         return service.registerCustomer(customer);
     }
 
     // Register a new admin
     @PostMapping("/register/admin")
-    public String registerAdmin(@RequestBody Admin admin) {
+    public Map<String, String> registerAdmin(@RequestBody Admin admin) {
         return service.registerAdmin(admin);
     }
 //	@RequestMapping("saveUser")
